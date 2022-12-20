@@ -6,6 +6,11 @@ class Case {
         this.checked = checked;
     }
 }
+class CaseScore {
+    constructor(valeur) {
+        this.valeur = valeur;
+    }
+}
 
 //Declaration de la liste des collections d'object de type case de chaque ligne
 let collectionCaseRouge = [];
@@ -13,6 +18,7 @@ let collectionCaseJaune = [];
 let collectionCaseVert = [];
 let collectionCaseBleu = [];
 let collectionCasePenalite = [];
+let collectionCaseScore = [];
 //Fonction qui va creer des cases et les insèrer dans un tableaux
 //La variable incrementation represente le sens: 1=2>12  2=12>2
 function creationCase(collection, couleur, incrementation) {
@@ -27,6 +33,8 @@ function creationCase(collection, couleur, incrementation) {
             collection.push(element);
         }
     }
+    let element = new Case("X", couleur, false);
+    collection.push(element);
 }
 
 function creationCasePenalite(collection, couleur) {
@@ -34,8 +42,13 @@ function creationCasePenalite(collection, couleur) {
         let element = new Case(-5, couleur, false);
         collection.push(element);
     }
-    console.log(collection);
+}
 
+function creationCaseScore(collection) {
+    for (let i = 0; i < 6; i++) {
+        let element = new CaseScore(0);
+        collection.push(element);
+    }
 }
 
 function genererLigne(collection, couleur, idDiv) {
@@ -54,8 +67,38 @@ function genererLigne(collection, couleur, idDiv) {
     }
 }
 
-function genererLignePenalite(collection, couleur, idDiv) {
+function genererLignePenalite(collection, idDiv) {
+    let grandeCase = document.createElement("div");
+    grandeCase.setAttribute("id", "grandeCasePenalite");
+    let p = document.createElement("p");
+    let texte = document.createTextNode("Pénalité")
+    p.appendChild(texte);
+    grandeCase.appendChild(p);
+    let div = document.getElementById(idDiv);
+    div.appendChild(grandeCase);
+    for (let element in collection) {
+        let balise = document.createElement("div");
+        balise.setAttribute("id", element + "_" + collection[element].couleur);
+        balise.setAttribute("class", "casePenalite case");
+        let pCase = document.createElement("p");
+        let textCase = document.createTextNode(collection[element].valeur)
+        pCase.appendChild(textCase);
+        balise.appendChild(pCase);
+        div.appendChild(balise);
+    }
+}
 
+function genererLigneScore(collection, idDiv) {
+    for (let element in collection) {
+        let balise = document.createElement("div");
+        balise.setAttribute("class", "caseScore");
+        let p = document.createElement("p");
+        let valeur = document.createTextNode(collection[element].valeur);
+        p.appendChild(valeur);
+        balise.appendChild(p);
+        let div = document.getElementById(idDiv);
+        div.appendChild(balise);
+    }
 }
 //Fonction principal
 function run() {
@@ -68,5 +111,9 @@ function run() {
     genererLigne(collectionCaseVert, "vert", "ligneVert");
     genererLigne(collectionCaseBleu, "bleu", "ligneBleu");
     creationCasePenalite(collectionCasePenalite, "gris");
+    genererLignePenalite(collectionCasePenalite, "ligneMallus");
+    creationCaseScore(collectionCaseScore);
+    genererLigneScore(collectionCaseScore, "lignePoint");
+
 
 }
