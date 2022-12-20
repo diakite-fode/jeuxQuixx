@@ -1,0 +1,67 @@
+h1 {
+    text-align: center;
+}
+
+#container {
+    /*Les éléments fils du conteneur seront flexible*/
+    display: flex;
+    /*decale un element fils en bas en cas de manque place*/
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 40%;
+    height: auto;
+    margin-left: 30%;
+
+}
+
+/*Rend les element fils flexible*/
+#container>div {
+    display: flex;
+}
+
+.case {
+    width: 50px;
+    height: 70px;
+    display: flex;
+    border: 1px solid black;
+    margin: 2px;
+    align-items: center;
+    justify-content: center;
+}
+
+.bleu {
+    background-color: cadetblue;
+    border-color: blue;
+}
+
+.rouge {
+    background-color: palevioletred;
+    border-color: red
+}
+
+.vert {
+    background-color: rgba(95, 255, 47, 0.959);
+    border-color: green;
+}
+
+.jaune {
+    background-color: rgb(213, 235, 117);
+    border-color: rgb(255, 230, 0);
+}
+
+/*propriete des case de penalite*/
+.casePenalite {
+    background-color: rgb(211, 208, 208);
+    border-color: gray;
+
+}
+
+/*propriete de la grande penalite*/
+#grandeCasePenalite {
+    width: 374px;
+    height: 70px;
+    display: flex;
+    border: 1px solid black;
+    align-items: center;
+    justify-content: center;
+}
