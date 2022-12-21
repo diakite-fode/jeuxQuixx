@@ -9,6 +9,7 @@ class Case {
 class CaseScore {
     constructor(valeur) {
         this.valeur = valeur;
+        this.id = "";
     }
 }
 
@@ -51,13 +52,24 @@ function creationCaseScore(collection) {
     }
 }
 
+function ajoutIdCaseScore() {
+    collectionCaseScore[0].id = "rouge";
+    collectionCaseScore[1].id = "jaune";
+    collectionCaseScore[2].id = "vert";
+    collectionCaseScore[3].id = "bleu";
+    collectionCaseScore[4].id = "gris";
+    collectionCaseScore[5].id = "scoreTotal";
+}
+
 function genererLigne(collection, couleur, idDiv) {
     for (let element in collection) {
         let balise = document.createElement("div");
+        balise.setAttribute("onclick", "majScore(\"" + collection[element].valeur + "_" + couleur + "\",\"" + couleur + "\")");
         let p = document.createElement("p");
         let numeroCase = document.createTextNode(collection[element].valeur)
         p.appendChild(numeroCase)
-        balise.setAttribute("id", collection[element].valeur + "_" + couleur);
+        p.setAttribute("id", collection[element].valeur + "_" + couleur);
+        p.setAttribute("name", couleur);
         balise.setAttribute("class", "case " + couleur);
         balise.appendChild(p);
         console.log(p);
@@ -78,9 +90,10 @@ function genererLignePenalite(collection, idDiv) {
     div.appendChild(grandeCase);
     for (let element in collection) {
         let balise = document.createElement("div");
-        balise.setAttribute("id", element + "_" + collection[element].couleur);
         balise.setAttribute("class", "casePenalite case");
         let pCase = document.createElement("p");
+        pCase.setAttribute("id", element + "_" + collection[element].couleur);
+        pCase.setAttribute("name", collection[element].couleur);
         let textCase = document.createTextNode(collection[element].valeur)
         pCase.appendChild(textCase);
         balise.appendChild(pCase);
@@ -93,13 +106,43 @@ function genererLigneScore(collection, idDiv) {
         let balise = document.createElement("div");
         balise.setAttribute("class", "caseScore");
         let p = document.createElement("p");
+        p.setAttribute("id", collection[element].id)
         let valeur = document.createTextNode(collection[element].valeur);
         p.appendChild(valeur);
         balise.appendChild(p);
         let div = document.getElementById(idDiv);
         div.appendChild(balise);
     }
+
 }
+
+/*
+function qui associe une couleur à un chiffre
+le chiffre sera ensuite utiliser comme indice dans la collection: collectionCaseScore
+*/
+function couleurScore(couleur) {
+    switch (couleur) {
+        case "rouge":
+            return 0;
+        case "jaune":
+            return 1;
+        case "vert":
+            return 2;
+        case "bleu":
+            return 3;
+        default:
+            console.log("La couleur est introuvable.Entrez une autre couleur.");
+    }
+
+}
+function majScore(id, couleur) {
+    let nombre = parseInt(document.getElementById(id).innerText);
+    let indice = couleurScore(couleur);
+    let score = collectionCaseScore[indice].valeur += nombre;
+    let balise = document.getElementById(couleur);
+    balise.innerHTML = score;
+}
+
 //Fonction principal
 function run() {
     creationCase(collectionCaseRouge, "rouge", 1);
@@ -113,6 +156,7 @@ function run() {
     creationCasePenalite(collectionCasePenalite, "gris");
     genererLignePenalite(collectionCasePenalite, "ligneMallus");
     creationCaseScore(collectionCaseScore);
+    ajoutIdCaseScore();
     genererLigneScore(collectionCaseScore, "lignePoint");
 
 

@@ -2,10 +2,10 @@ h1 {
     text-align: center;
 }
 
-/*Instruction qui rend le texte des paragraphe cliquable*/
-p {
+/*Instruction qui transforme le curseur de la souris en une main sur le texte des paragraphe */
+/* p {
     cursor: pointer;
-}
+} */
 
 #container {
     /*Les éléments fils du conteneur seront flexible*/
@@ -22,6 +22,7 @@ p {
 /*Rend les element fils flexible*/
 #container>div {
     display: flex;
+    cursor: pointer;
 }
 
 /*Propriété des cases couleur*/
@@ -76,6 +77,7 @@ p {
     align-items: center;
     justify-content: center;
     margin: 2px;
+    cursor: default;
 }
 
 /*Proprièté cases score*/
@@ -87,6 +89,7 @@ p {
     margin: 2px;
     align-items: center;
     justify-content: center;
+    cursor: default;
 }
 
 /*Instruction qui rend le texte des cases score en route*/
