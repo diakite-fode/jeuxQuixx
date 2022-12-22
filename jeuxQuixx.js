@@ -91,6 +91,7 @@ function genererLignePenalite(collection, idDiv) {
     for (let element in collection) {
         let balise = document.createElement("div");
         balise.setAttribute("class", "casePenalite case");
+        balise.setAttribute("onclick", "majScore(\"" + element + "_" + collection[element].couleur + "\",\"" + collection[element].couleur + "\")");
         let pCase = document.createElement("p");
         pCase.setAttribute("id", element + "_" + collection[element].couleur);
         pCase.setAttribute("name", collection[element].couleur);
@@ -130,17 +131,34 @@ function couleurScore(couleur) {
             return 2;
         case "bleu":
             return 3;
+        case "gris":
+            return 4;
+        case "total":
+            return 5;
         default:
             console.log("La couleur est introuvable.Entrez une autre couleur.");
     }
 
 }
+
+function calculTotal() {
+    let scoreLigneRouge = parseInt(document.getElementById("rouge").innerText);
+    let scoreLigneJaune = parseInt(document.getElementById("jaune").innerText);
+    let scoreLigneVert = parseInt(document.getElementById("vert").innerText);
+    let scoreLignebleu = parseInt(document.getElementById("bleu").innerText);
+    let scoreLigneGris = parseInt(document.getElementById("gris").innerText);
+    let scoreTotal = (scoreLigneRouge + scoreLigneJaune + scoreLigneVert + scoreLignebleu + scoreLigneGris);
+    let balise = document.getElementById("scoreTotal");
+    balise.innerHTML = scoreTotal;
+}
+
 function majScore(id, couleur) {
     let nombre = parseInt(document.getElementById(id).innerText);
     let indice = couleurScore(couleur);
     let score = collectionCaseScore[indice].valeur += nombre;
     let balise = document.getElementById(couleur);
     balise.innerHTML = score;
+    calculTotal();
 }
 
 //Fonction principal
