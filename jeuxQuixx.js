@@ -140,18 +140,20 @@ function couleurScore(couleur) {
     }
 
 }
-
+/*Fonction qui récupère le score de chaque case(dernière ligne) puis met à jour le score total*/
 function calculTotal() {
     let scoreLigneRouge = parseInt(document.getElementById("rouge").innerText);
     let scoreLigneJaune = parseInt(document.getElementById("jaune").innerText);
     let scoreLigneVert = parseInt(document.getElementById("vert").innerText);
     let scoreLignebleu = parseInt(document.getElementById("bleu").innerText);
+    /*la ligne suivante récupère le score total de pénalité (nombre négative)*/
     let scoreLigneGris = parseInt(document.getElementById("gris").innerText);
+    /*rappel: "+" et "-" = "-" donc pour deduire les pénalités(négative), on met un "+"*/
     let scoreTotal = (scoreLigneRouge + scoreLigneJaune + scoreLigneVert + scoreLignebleu + scoreLigneGris);
     let balise = document.getElementById("scoreTotal");
     balise.innerHTML = scoreTotal;
 }
-
+/*Fonction qui met à jour le score total*/
 function majScore(id, couleur) {
     let nombre = parseInt(document.getElementById(id).innerText);
     let indice = couleurScore(couleur);
