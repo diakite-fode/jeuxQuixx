@@ -13,6 +13,8 @@ class CaseScore {
     }
 }
 
+
+
 //Declaration de la liste des collections d'object de type case de chaque ligne
 let collectionCaseRouge = [];
 let collectionCaseJaune = [];
@@ -41,6 +43,7 @@ function creationCase(collection, couleur, incrementation) {
 function creationCasePenalite(collection, couleur) {
     for (let i = 0; i < 4; i++) {
         let element = new Case(-5, couleur, false);
+        element.indice = i;
         collection.push(element);
     }
 }
@@ -141,7 +144,7 @@ function couleurScore(couleur) {
 
 }
 /*Fonction qui récupère le score de chaque case(dernière ligne) puis met à jour le score total*/
-function calculTotal() {
+function calculScoreTotal() {
     let scoreLigneRouge = parseInt(document.getElementById("rouge").innerText);
     let scoreLigneJaune = parseInt(document.getElementById("jaune").innerText);
     let scoreLigneVert = parseInt(document.getElementById("vert").innerText);
@@ -153,14 +156,67 @@ function calculTotal() {
     let balise = document.getElementById("scoreTotal");
     balise.innerHTML = scoreTotal;
 }
+/*cette fonction permet de savoir si les valeurs d'une collection commence à 2 (ligne rouge et jaune) ou à 12 (ligne vert et bleu*/
+function debutValeurIndexCollection(couleur) {
+    if (couleur == "rouge" || couleur == "jaune") {
+        return 2;
+    } else {
+        return 12;
+    }
+}
+/*Cette fonction retourne une collection en fonction d'une couleur*/
+function trouverCollection(couleur) {
+    switch (couleurScore(couleur)) {
+        case 0:
+            return collectionCaseRouge;
+        case 1:
+            return collectionCaseJaune;
+        case 2:
+            return collectionCaseVert;
+        case 3:
+            return collectionCaseBleu;
+    }
+}
+/*retourne l'indice de la case*/
+function trouverIndex(nombre, couleur) {
+    let index;
+    if (debutValeurIndexCollection(couleur) == 12) {
+        index = debutValeurIndexCollection(couleur) - nombre;
+        return index;
+    } else {
+        index = nombre - debutValeurIndexCollection(couleur);
+        return index;
+    }
+}
+
+/*cette fonction retourne l'objet case qui a été appuyé*/
+function trouverIndexCase(nombre, couleur) {
+    let collection = trouverCollection(couleur);
+    let index = trouverIndex(nombre, couleur);
+    caseSelectionner = collection[index];
+    return caseSelectionner;
+}
+/*Cette fonction met les attributs "checked" à true de toutes les cases,de manière décroissante en partant de l'indice donné en paramètre */
+function desactiverCase(couleur, indice) {
+    let collection;
+    for (let i = indice; i >= 0; i--) {
+        collection = trouverCollection(couleur);
+        casee = collection[i].checked = true;
+        console.log(casee);
+    }
+
+}
 /*Fonction qui met à jour le score total*/
 function majScore(id, couleur) {
     let nombre = parseInt(document.getElementById(id).innerText);
-    let indice = couleurScore(couleur);
-    let score = collectionCaseScore[indice].valeur += nombre;
-    let balise = document.getElementById(couleur);
-    balise.innerHTML = score;
-    calculTotal();
+    if (trouverIndexCase(nombre, couleur).checked == false) {
+        let indice = couleurScore(couleur);
+        let score = collectionCaseScore[indice].valeur += nombre;
+        let balise = document.getElementById(couleur);
+        balise.innerHTML = score;
+        calculScoreTotal();
+        desactiverCase(couleur, trouverIndex(nombre, couleur))
+    }
 }
 
 //Fonction principal
