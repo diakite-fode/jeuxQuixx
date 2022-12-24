@@ -11,14 +11,27 @@
 
 <body>
     <h1>Interface jeux Quixx</h1>
-    <div id="container">
+    <section id="container">
         <div id="ligneRouge"></div>
         <div id="ligneJaune"></div>
         <div id="ligneVert"></div>
         <div id="ligneBleu"></div>
         <div id="ligneMallus"></div>
         <div id="lignePoint"></div>
-    </div>
+        <button id="reset" type="button" onclick="refresh()">Reset</button>
+    </section><br>
+    <section>
+        <h3>Règles de fonctionnement de la grille</h3>
+        <ul>
+            <li>Pour chacune des 4 premières rangées, on ne peut cocher des cases que de gauche à droite</li>
+            <li>pour une rangée donnée, lorsqu'une case est cochée, on ne peut plus cocher celles avant elle</li>
+            <li>les cases 'x' de chaque rangée ne peuvent être cochées que si 5 cases sont précédement cochées</li>
+            <li>le score de chaque rangée se calcule de la façon suivante : soit n le nombre de cases cochées alors
+                score=n*(n+1)/2</li>
+            <li>les cases de malus offrent un score de -5 par case cochée</li>
+            <li>le score total est le score obtenu sur chaque rangée moins le score cases malus</li>
+        </ul>
+    </section>
 
     <script src="jeuxQuixx.js"></script>
     <script>

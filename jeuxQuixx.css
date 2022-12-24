@@ -7,6 +7,11 @@ h1 {
     cursor: pointer;
 } */
 
+/*Cette class met un arrière plan balnc au cases cliqué */
+.caseCliquer {
+    background-color: rgb(255, 255, 255) !important;
+}
+
 #container {
     /*Les éléments fils du conteneur seront flexible*/
     display: flex;
@@ -95,4 +100,9 @@ h1 {
 /*Instruction qui rend le texte des cases score en route*/
 .caseScore>p {
     color: red;
+}
+
+#reset {
+    cursor: pointer;
+    margin-top: 5px;
 }

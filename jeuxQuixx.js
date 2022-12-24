@@ -265,16 +265,20 @@ function desactiverCase(couleur, indice) {
 /*Fonction qui met à jour le score total*/
 function majScore(id, couleur) {
     let nombre = parseInt(document.getElementById(id).innerText);
+    let noeuParencaseCliquer = document.getElementById(id).parentNode;
+    let attributClassParent = noeuParencaseCliquer.getAttribute('class');
     if (!nombre) {
         let collection = trouverCollection(couleur);
         if (caseXvalide(couleur)) {
             alert("la case \"X\" de la ligne " + couleur + " a été cliqué !");
             collection[11].checked == false;
+            noeuParencaseCliquer.setAttribute("class", "caseCliquer " + attributClassParent);
         } else {
             alert("la case \"X\ de la ligne " + couleur + " ne peut pas être cliqué. Au moins 5 cases doivent précèdement être cliqué !");
         }
     } else if (nombre == -5) {
         majScorePenalite(id);
+        noeuParencaseCliquer.setAttribute("class", "caseCliquer " + attributClassParent);
         calculScoreTotal();
     } else if (trouverIndexCase(nombre, couleur).checked == false) {
         let indice = couleurScore(couleur);
@@ -282,10 +286,16 @@ function majScore(id, couleur) {
         let score = collectionCaseScore[indice].valeur = nbCaseCliquer * (nbCaseCliquer + 1) / 2;
         let balise = document.getElementById(couleur);
         balise.innerHTML = score;
+        noeuParencaseCliquer.setAttribute("class", "caseCliquer " + attributClassParent);
         calculScoreTotal();
         desactiverCase(couleur, trouverIndex(nombre, couleur))
     }
 }
+
+function refresh() {
+    window.location.reload("Refresh")
+}
+
 
 //Fonction principal
 function run() {
