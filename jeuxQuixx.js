@@ -101,7 +101,7 @@ function genererLignePenalite(collection, idDiv) {
         balise.setAttribute("class", "casePenalite case");
         balise.setAttribute("onclick", "majScore(\"" + element + "\",\"" + collection[element].couleur + "\")");
         let pCase = document.createElement("p");
-        pCase.setAttribute("id", element + "_" + collection[element].couleur);
+        pCase.setAttribute("id", element);
         pCase.setAttribute("name", collection[element].couleur);
         let textCase = document.createTextNode(collection[element].valeur)
         pCase.appendChild(textCase);
@@ -211,6 +211,16 @@ function trouverIndex(nombre, couleur) {
         return index;
     }
 }
+//Cette fonction met à jour la case score des points de pénalité et met l'attribut checked de la case à false
+function majScorePenalite(indexDansCollection) {
+    let caseCliquer = collectionCasePenalite[indexDansCollection];
+    if (caseCliquer.checked == false) {
+        let score = collectionCaseScore[4].valeur += -5;
+        let balise = document.getElementById("gris")
+        balise.innerHTML = score;
+        caseCliquer.checked = true;
+    }
+}
 
 /*cette fonction retourne l'objet case qui a été appuyé*/
 function trouverIndexCase(nombre, couleur) {
@@ -232,9 +242,12 @@ function desactiverCase(couleur, indice) {
 /*Fonction qui met à jour le score total*/
 function majScore(id, couleur) {
     let nombre = parseInt(document.getElementById(id).innerText);
-    if (trouverIndexCase(nombre, couleur).checked == false) {
-        let nbCaseCliquer = majVariableNbCaseCliquer(couleur);
+    if (nombre == -5) {
+        majScorePenalite(id);
+        calculScoreTotal();
+    } else if (trouverIndexCase(nombre, couleur).checked == false) {
         let indice = couleurScore(couleur);
+        let nbCaseCliquer = majVariableNbCaseCliquer(couleur);
         let score = collectionCaseScore[indice].valeur = nbCaseCliquer * (nbCaseCliquer + 1) / 2;
         let balise = document.getElementById(couleur);
         balise.innerHTML = score;
