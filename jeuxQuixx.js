@@ -200,6 +200,29 @@ function trouverCollection(couleur) {
             return collectionCaseBleu;
     }
 }
+
+//Fonction qui retourne le nombre de case cliqué
+function varNbCaseCliquer(couleur) {
+    switch (couleur) {
+        case "rouge":
+            return nbRouge;
+        case "jaune":
+            return nbJaune;
+        case "vert":
+            return nbVert;
+        case "bleu":
+            return nbBleu;
+    }
+}
+
+//Cette fonction return true si la case X de la ligne concerné peut être cliqué
+function caseXvalide(couleur) {
+    let nbCaseCliquer = varNbCaseCliquer(couleur);
+    if (nbCaseCliquer >= 5) {
+        return true;
+    }
+}
+
 /*retourne l'indice d'une case*/
 function trouverIndex(nombre, couleur) {
     let index;
@@ -242,7 +265,15 @@ function desactiverCase(couleur, indice) {
 /*Fonction qui met à jour le score total*/
 function majScore(id, couleur) {
     let nombre = parseInt(document.getElementById(id).innerText);
-    if (nombre == -5) {
+    if (!nombre) {
+        let collection = trouverCollection(couleur);
+        if (caseXvalide(couleur)) {
+            alert("la case \"X\" de la ligne " + couleur + " a été cliqué !");
+            collection[11].checked == false;
+        } else {
+            alert("la case \"X\ de la ligne " + couleur + " ne peut pas être cliqué. Au moins 5 cases doivent précèdement être cliqué !");
+        }
+    } else if (nombre == -5) {
         majScorePenalite(id);
         calculScoreTotal();
     } else if (trouverIndexCase(nombre, couleur).checked == false) {
