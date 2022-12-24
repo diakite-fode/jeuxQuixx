@@ -291,9 +291,9 @@ function majScore(id, couleur) {
         desactiverCase(couleur, trouverIndex(nombre, couleur))
     }
 }
-
+/*Fonction qui actualise la page*/
 function refresh() {
-    window.location.reload("Refresh")
+    window.location.reload();
 }
 
 
