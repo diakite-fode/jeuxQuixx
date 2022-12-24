@@ -22,6 +22,12 @@ let collectionCaseVert = [];
 let collectionCaseBleu = [];
 let collectionCasePenalite = [];
 let collectionCaseScore = [];
+
+//Declaration des variables qui vont contenir le nombre de case cliqué de chaque ligne
+let nbRouge = 0;
+let nbJaune = 0;
+let nbVert = 0;
+let nbBleu = 0;
 //Fonction qui va creer des cases et les insèrer dans un tableaux
 //La variable incrementation represente le sens: 1=2>12  2=12>2
 function creationCase(collection, couleur, incrementation) {
@@ -43,7 +49,6 @@ function creationCase(collection, couleur, incrementation) {
 function creationCasePenalite(collection, couleur) {
     for (let i = 0; i < 4; i++) {
         let element = new Case(-5, couleur, false);
-        element.indice = i;
         collection.push(element);
     }
 }
@@ -94,7 +99,7 @@ function genererLignePenalite(collection, idDiv) {
     for (let element in collection) {
         let balise = document.createElement("div");
         balise.setAttribute("class", "casePenalite case");
-        balise.setAttribute("onclick", "majScore(\"" + element + "_" + collection[element].couleur + "\",\"" + collection[element].couleur + "\")");
+        balise.setAttribute("onclick", "majScore(\"" + element + "\",\"" + collection[element].couleur + "\")");
         let pCase = document.createElement("p");
         pCase.setAttribute("id", element + "_" + collection[element].couleur);
         pCase.setAttribute("name", collection[element].couleur);
@@ -118,6 +123,24 @@ function genererLigneScore(collection, idDiv) {
         div.appendChild(balise);
     }
 
+}
+
+/*Fonction qui met à jour les variables qui compte le nombre de case cliqué par ligne*/
+function majVariableNbCaseCliquer(couleur) {
+    switch (couleur) {
+        case "rouge":
+            nbRouge += 1;
+            return nbRouge;
+        case "jaune":
+            nbJaune += 1;
+            return nbJaune;
+        case "vert":
+            nbVert += 1;
+            return nbVert;
+        case "bleu":
+            nbBleu += 1;
+            return nbBleu;
+    }
 }
 
 /*
@@ -177,7 +200,7 @@ function trouverCollection(couleur) {
             return collectionCaseBleu;
     }
 }
-/*retourne l'indice de la case*/
+/*retourne l'indice d'une case*/
 function trouverIndex(nombre, couleur) {
     let index;
     if (debutValeurIndexCollection(couleur) == 12) {
@@ -210,8 +233,9 @@ function desactiverCase(couleur, indice) {
 function majScore(id, couleur) {
     let nombre = parseInt(document.getElementById(id).innerText);
     if (trouverIndexCase(nombre, couleur).checked == false) {
+        let nbCaseCliquer = majVariableNbCaseCliquer(couleur);
         let indice = couleurScore(couleur);
-        let score = collectionCaseScore[indice].valeur += nombre;
+        let score = collectionCaseScore[indice].valeur = nbCaseCliquer * (nbCaseCliquer + 1) / 2;
         let balise = document.getElementById(couleur);
         balise.innerHTML = score;
         calculScoreTotal();
