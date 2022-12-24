@@ -270,11 +270,8 @@ function majScore(id, couleur) {
     if (!nombre) {
         let collection = trouverCollection(couleur);
         if (caseXvalide(couleur)) {
-            alert("la case \"X\" de la ligne " + couleur + " a été cliqué !");
             collection[11].checked == false;
             noeuParencaseCliquer.setAttribute("class", "caseCliquer " + attributClassParent);
-        } else {
-            alert("la case \"X\ de la ligne " + couleur + " ne peut pas être cliqué. Au moins 5 cases doivent précèdement être cliqué !");
         }
     } else if (nombre == -5) {
         majScorePenalite(id);
